@@ -16,7 +16,8 @@ import threading
 #Bluetooth connection with wheelchair RPi4
 from bluedot.btcomm import BluetoothServer
 from time import sleep
-from signal import pause
+# from signal import pause
+import signal
 
 #Connection with Piccolo
 import smbus
@@ -414,7 +415,7 @@ class Ui_MainWindow(object):
         print("waiting for connection")
         serverList.append(server)
         try:
-            pause()
+            signal.pause()
         except KeyboardInterrupt as e:
             print("cancelled by user")
         finally:
