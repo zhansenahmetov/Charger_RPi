@@ -1,3 +1,7 @@
+"""
+This file is responsible for creating the main Charger display
+"""
+
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'Window.ui'
@@ -52,7 +56,15 @@ count_start=0
 count_stop=0
 
 class Ui_MainWindow(object):
+    """
+    This class creates the main window displaying charger information
+    """
     def setupUi(self, MainWindow):
+        """
+        This function will set up the UI elements that will be present on this window
+
+        :param MainWindow: the window on which to build the elements
+        """
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(800, 600)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -109,6 +121,11 @@ class Ui_MainWindow(object):
         clock.start()
 
     def retranslateUi(self, MainWindow):
+        """
+        This function will reassign some components' textual content
+
+        :param MainWindow: parent window of the target components
+        """
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.label.setText(_translate("MainWindow", "Charger Available"))
@@ -121,6 +138,9 @@ class Ui_MainWindow(object):
         t.start()
         
     def killTimeout(self):
+        """
+        This function kills the timeout delay thread
+        """
         try:
             print(qt_helper.timeoutGlobal)
             qt_helper.timeoutGlobal.terminate()
@@ -129,6 +149,10 @@ class Ui_MainWindow(object):
             print("Failed to kill thread")
         
     def stateUpdate(self):
+        """
+        This function is the 'brains' of the state machine on the Charger side.  Each time it is called it updates the
+        relevent components corresponding to the active state as defined by :obj:`StateClass.State`
+        """
         global clientStatus, serverList, updateTime
         
         # terminate timeout on state change
@@ -184,13 +208,11 @@ class Ui_MainWindow(object):
         self.stateUpdateMongo()
         qt_helper.timeoutMongo = qt_helper.DelayAction(updateTime,[print,'5 seconds left'],[self.stateUpdate,None],timer=None)
         qt_helper.timeoutMongo.start()
-        
-                        
-        
-    
-    
 
     def stateUpdateMongo(self):
+        """
+        This function updates the state in the Mongo Database
+        """
         try:
             client = pymongo.MongoClient("mongodb+srv://wheelchair:wheelchair@cluster0.pywpd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 
@@ -211,9 +233,16 @@ class Ui_MainWindow(object):
             print("no internet connection: ",e)
     
     def _bluetoothRun(self):
+        """
+        This is a container for all bluetooth functions
+        """
         global listT, limit_IV, delayList, delayTime
         
         def data_received(data):
+            """
+            This function reacts to data received over bluetooth
+            :param data: data received over bluetooth
+            """
             global stop_thread, count_start, count_stop
             try:
                 if listT[0].is_alive()==False:
@@ -355,6 +384,9 @@ class Ui_MainWindow(object):
                 
 
         def client_connected():
+            """
+            This function sends the confirmation to the wheelchair that the connection was successful
+            """
             global clientStatus
             server.send("1")
             print('client status is',clientStatus)
@@ -370,22 +402,26 @@ class Ui_MainWindow(object):
             
 
         def client_disconnected():
+            """
+            This function disconnects the client from the Charger
+            """
             global clientStatus, stop_thread 
             print("client disconnected")
             clientStatus=0
-            if sc.CState==State.READY_TO_CHARGE or sc.CState==State.AWAITING_CONNECTION:
+            # verify the state
+            if sc.CState == State.READY_TO_CHARGE or sc.CState == State.AWAITING_CONNECTION:
                 try:
                     if listT[0].is_alive():
-                        print("waiting for thred")
+                        print("waiting for thread")
                         stop_thread=True
                         listT[0].join()
                 except:
                     print("no thread in stop")
                 time.sleep(0.5)
-                bus.write_byte(address,15) #Reset TI Piccolo
-                MSG1 = bus.read_byte_data(address,1)
-                MSG1=int(MSG1)
-                print("message received is",str(MSG1))
+                bus.write_byte(address, 15) #Reset TI Piccolo
+                MSG1 = bus.read_byte_data(address, 1)
+                MSG1 = int(MSG1)
+                print("message received is", str(MSG1))
                 sc.CState=State.CHARGER_AVAILABLE
                 self.stateUpdate()
                 listT.clear()
@@ -424,6 +460,9 @@ class Ui_MainWindow(object):
         print("stopped")
     
     def _readI2C(self):
+        """
+        This function reads and reacts to the I2C communication from the TI Piccolo
+        """
         #print('read2c')
         global stop_thread, serverList, listT, count_start, count_stop
         global delayList, delayTime
@@ -505,10 +544,6 @@ class Ui_MainWindow(object):
                 #listT.clear()
                 break
             time.sleep(2)
-            
-            
-            
-
 
 if __name__ == "__main__":
     import sys

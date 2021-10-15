@@ -38,6 +38,72 @@
 <p>These scripts directly generate the GUI pages seen on the Raspberry Pi Device</p>
 <section id="module-Window_charger">
 <span id="window-charger-py"></span><h2>Window_charger.py<a class="headerlink" href="#module-Window_charger" title="Permalink to this headline">¶</a></h2>
+<p>This file is responsible for creating the main Charger display</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">Window_charger.</span></span><span class="sig-name descname"><span class="pre">Ui_MainWindow</span></span><a class="headerlink" href="#Window_charger.Ui_MainWindow" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class creates the main window displaying charger information</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.__weakref__">
+<span class="sig-name descname"><span class="pre">__weakref__</span></span><a class="headerlink" href="#Window_charger.Ui_MainWindow.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow._bluetoothRun">
+<span class="sig-name descname"><span class="pre">_bluetoothRun</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow._bluetoothRun" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a container for all bluetooth functions</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow._readI2C">
+<span class="sig-name descname"><span class="pre">_readI2C</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow._readI2C" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function reads and reacts to the I2C communication from the TI Piccolo</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.killTimeout">
+<span class="sig-name descname"><span class="pre">killTimeout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.killTimeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function kills the timeout delay thread</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.retranslateUi">
+<span class="sig-name descname"><span class="pre">retranslateUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MainWindow</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.retranslateUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will reassign some components’ textual content</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>MainWindow</strong> – parent window of the target components</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.setupUi">
+<span class="sig-name descname"><span class="pre">setupUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MainWindow</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.setupUi" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will set up the UI elements that will be present on this window</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>MainWindow</strong> – the window on which to build the elements</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.stateUpdate">
+<span class="sig-name descname"><span class="pre">stateUpdate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.stateUpdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is the ‘brains’ of the state machine on the Charger side.  Each time it is called it updates the
+relevent components corresponding to the active state as defined by <a class="reference internal" href="Helper_funcs.html#StateClass.State" title="StateClass.State"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StateClass.State</span></code></a></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.stateUpdateMongo">
+<span class="sig-name descname"><span class="pre">stateUpdateMongo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.stateUpdateMongo" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function updates the state in the Mongo Database</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

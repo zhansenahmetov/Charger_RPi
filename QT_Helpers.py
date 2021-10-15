@@ -1,3 +1,6 @@
+"""
+This file contains helper functions and classes that facilitate creation of GUI components and background processes
+"""
 from PyQt5 import QtCore, QtGui, QtWidgets
 from threading import Thread
 #import WCharging as wc
@@ -5,29 +8,20 @@ import time
 
 timeoutGlobal = None
 timeoutMongo = None
-
-class autoCloseMsg(QtWidgets.QMessageBox):
-    
-    def __init__(self,*__args):
-        QtWidgets.QMessageBox.__init__(self)
-        self.lifetime = 0 # message stays for x seconds
-        self.time = 0
-        
-    def showEvent(self, QShowEvent):
-        self.time = 0
-        if self.lifetime:
-            self.startTimer(1000) # start 1 Hz timer with Message box
-        
-    def timerEvent(self, *args, **kwargs):
-        self.time += 1
-        if self.time >= self.lifetime:
-            self.done(0)                # close after self.lifetime seconds
     
 class DelayAction(Thread):
+    """
+    This class is a generic thread for delaying the execution of an arbitrary quantity of functions
+    """
 
     def __init__(self,duration,*funcs,timer=None):
         """
-        funcs format: [function,argument]
+        This function initializes the delay thread
+
+        :param duration: duration in seconds until the callback functions are run
+        :param funcs: callback functions to be run at the end of the duration formatted:[function,parameter]\n
+            ``Note: To call functions that do not take parameters, None may be used: [function,None]``
+        :param timer: Label element to update with the countdown time
         """
         Thread.__init__(self,name="Delay_Func")
         self.funcs = funcs
@@ -40,10 +34,16 @@ class DelayAction(Thread):
         
 #         print("defining delay")
     def terminate(self):
+        """
+        This function stops the delay thread
+        """
         print("timeout stopped")
         self._running = False
 
     def run(self):
+        """
+        This function runs the timer loop that checks for when the delay duration is over, updating the timer each second
+        """
 #         print("executing delayed action")
         try:
             n=self.duration
@@ -73,6 +73,19 @@ class DelayAction(Thread):
             print("Error in Delay function: ",e)
 
 def makeButton(self,x,y,w,h,fontsize,name,text):
+    """
+    This function condenses the process of creating buttons
+
+    :param Self: parent window or object
+    :param x: Top left x position of the button
+    :param y: Top left y position of the button
+    :param w: Width of the button
+    :param h: Height of the button
+    :param fontsize: Fontsize of the button
+    :param name: Object name of the button object
+    :param text: Text Content of the button
+    :return: Created button object
+    """
     pushButton = QtWidgets.QPushButton(self)
     pushButton.setGeometry(QtCore.QRect(x, y, w, h))
     font = QtGui.QFont()
@@ -82,38 +95,31 @@ def makeButton(self,x,y,w,h,fontsize,name,text):
     pushButton.setText(QtCore.QCoreApplication.translate("Dialog", text))
     return pushButton;
 
-def makeMsgBox(title="This is a Title",text="This is a message",color="yellow",icon=QtWidgets.QMessageBox.Information, duration=2,fontsize=20,buttons=QtWidgets.QMessageBox.NoButton):
-    msg = autoCloseMsg()
-    msg.lifetime = duration
-#     msgSize = msg.sizeHint()
-#     print("message size:",msg.sizeHint())
-#     screenW = 800
-#     screenH = 400
-#     msg.move(QtCore.QPoint(screenW/2-msgSize.width()/2,
-#                            screenH/2-msgSize.height()/2))
-    
-    msg.setWindowTitle(title)
-    msg.setText(text)
-    msg.setStandardButtons(buttons)
-    msg.setIcon(icon)
-    msg.setEscapeButton(QtWidgets.QMessageBox.Ok)
-    # center the message window (autoclose was not centered by default)
-    msg.setStyleSheet("font-size: "+str(fontsize)+"pt; background-color: "+str(color)+";")
-    msg.exec()
-    return msg
-        
-
 def makeTabLabel(self,x,y,w,h,grayscale,fontSize,name,text):
-        label = QtWidgets.QLabel(self.centralwidget)
-        label.setGeometry(QtCore.QRect(x, y, w, h))
-        font = QtGui.QFont()
-        font.setPointSize(fontSize)
-        label.setFont(font)
-        label.setLayoutDirection(QtCore.Qt.LeftToRight)
-        label.setStyleSheet("color: rgb(0, 0, 0);\n"
+    """
+    This function condenses the process of creating tab labels
+
+    :param self: parent window or object
+    :param x: Top left x position of the tab label
+    :param y: Top left y position of the tab label
+    :param w: Width of the tab label
+    :param h: Height of the tab label
+    :param grayscale: Singular rgb value (0-255) representative of the greyscale rbg(x,x,x)
+    :param FontSize: Font size of the tab label
+    :param name: Object name of the tab label
+    :param text: Text content of the tab label
+    :return: Created tab label object
+    """
+    label = QtWidgets.QLabel(self.centralwidget)
+    label.setGeometry(QtCore.QRect(x, y, w, h))
+    font = QtGui.QFont()
+    font.setPointSize(fontSize)
+    label.setFont(font)
+    label.setLayoutDirection(QtCore.Qt.LeftToRight)
+    label.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgb("+str(grayscale)+", "+str(grayscale)+", "+str(grayscale)+");")
-        label.setFrameShape(QtWidgets.QFrame.NoFrame)
-        label.setAlignment(QtCore.Qt.AlignCenter)
-        label.setObjectName(name)
-        label.setText(QtCore.QCoreApplication.translate("MainWindow",text))
-        return label
+    label.setFrameShape(QtWidgets.QFrame.NoFrame)
+    label.setAlignment(QtCore.Qt.AlignCenter)
+    label.setObjectName(name)
+    label.setText(QtCore.QCoreApplication.translate("MainWindow",text))
+    return label

@@ -37,66 +37,149 @@
 <p>These scripts assist in the generation of pages or recurring GUI components, as well as facilitate common background processes.</p>
 <section id="module-QT_Helpers">
 <span id="qt-helpers-py"></span><h2>QT_Helpers.py<a class="headerlink" href="#module-QT_Helpers" title="Permalink to this headline">¶</a></h2>
+<p>This file contains helper functions and classes that facilitate creation of GUI components and background processes</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="QT_Helpers.DelayAction">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">QT_Helpers.</span></span><span class="sig-name descname"><span class="pre">DelayAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">funcs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.DelayAction" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p>This class is a generic thread for delaying the execution of an arbitrary quantity of functions</p>
+<dl class="py method">
 <dt class="sig sig-object py" id="QT_Helpers.DelayAction.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">duration</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">funcs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.DelayAction.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>funcs format: [function,argument]</p>
+<dd><p>This function initializes the delay thread</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>duration</strong> – duration in seconds until the callback functions are run</p></li>
+<li><p><strong>funcs</strong> – <p>callback functions to be run at the end of the duration formatted:[function,parameter]</p>
+<p><code class="docutils literal notranslate"><span class="pre">Note:</span> <span class="pre">To</span> <span class="pre">call</span> <span class="pre">functions</span> <span class="pre">that</span> <span class="pre">do</span> <span class="pre">not</span> <span class="pre">take</span> <span class="pre">parameters,</span> <span class="pre">None</span> <span class="pre">may</span> <span class="pre">be</span> <span class="pre">used:</span> <span class="pre">[function,None]</span></code></p>
+</p></li>
+<li><p><strong>timer</strong> – Label element to update with the countdown time</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="QT_Helpers.DelayAction.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.DelayAction.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method representing the thread’s activity.</p>
-<p>You may override this method in a subclass. The standard run() method
-invokes the callable object passed to the object’s constructor as the
-target argument, if any, with sequential and keyword arguments taken
-from the args and kwargs arguments, respectively.</p>
+<dd><p>This function runs the timer loop that checks for when the delay duration is over, updating the timer each second</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="QT_Helpers.DelayAction.terminate">
+<span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.DelayAction.terminate" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function stops the delay thread</p>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="QT_Helpers.autoCloseMsg">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">QT_Helpers.</span></span><span class="sig-name descname"><span class="pre">autoCloseMsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.autoCloseMsg" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
-<dt class="sig sig-object py" id="QT_Helpers.autoCloseMsg.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">_autoCloseMsg__args</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.autoCloseMsg.__init__" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="py function">
+<dt class="sig sig-object py" id="QT_Helpers.makeButton">
+<span class="sig-prename descclassname"><span class="pre">QT_Helpers.</span></span><span class="sig-name descname"><span class="pre">makeButton</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontsize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.makeButton" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function condenses the process of creating buttons</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Self</strong> – parent window or object</p></li>
+<li><p><strong>x</strong> – Top left x position of the button</p></li>
+<li><p><strong>y</strong> – Top left y position of the button</p></li>
+<li><p><strong>w</strong> – Width of the button</p></li>
+<li><p><strong>h</strong> – Height of the button</p></li>
+<li><p><strong>fontsize</strong> – Fontsize of the button</p></li>
+<li><p><strong>name</strong> – Object name of the button object</p></li>
+<li><p><strong>text</strong> – Text Content of the button</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Created button object</p>
+</dd>
+</dl>
+</dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="QT_Helpers.makeTabLabel">
+<span class="sig-prename descclassname"><span class="pre">QT_Helpers.</span></span><span class="sig-name descname"><span class="pre">makeTabLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grayscale</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fontSize</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#QT_Helpers.makeTabLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function condenses the process of creating tab labels</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>self</strong> – parent window or object</p></li>
+<li><p><strong>x</strong> – Top left x position of the tab label</p></li>
+<li><p><strong>y</strong> – Top left y position of the tab label</p></li>
+<li><p><strong>w</strong> – Width of the tab label</p></li>
+<li><p><strong>h</strong> – Height of the tab label</p></li>
+<li><p><strong>grayscale</strong> – Singular rgb value (0-255) representative of the greyscale rbg(x,x,x)</p></li>
+<li><p><strong>FontSize</strong> – Font size of the tab label</p></li>
+<li><p><strong>name</strong> – Object name of the tab label</p></li>
+<li><p><strong>text</strong> – Text content of the tab label</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Created tab label object</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="module-StateClass">
 <span id="stateclass-py"></span><span id="state-class-label"></span><h2>StateClass.py<a class="headerlink" href="#module-StateClass" title="Permalink to this headline">¶</a></h2>
+<p>This file defines the states available to the Wheelchir</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="StateClass.State">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">StateClass.</span></span><span class="sig-name descname"><span class="pre">State</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#StateClass.State" title="Permalink to this definition">¶</a></dt>
-<dd><p>An enumeration.</p>
+<dd><p>This class contains enumerations representing each of the wheelchair states</p>
+<blockquote>
+<div><dl class="simple">
+<dt>::</dt><dd><p>CHARGER_AVAILABLE = 1
+CHARGING_ALLOWED = 3
+AWAITING_CONNECTION= 5
+READY_TO_CHARGE = 6
+CHARGING_IN_PROGRESS = 7
+CHARGER_FAULTY_PLUGGED = 8
+CHARGER_FAULTY_UNPLUGGED = 12
+WC_FULLY_CHARGED = 9
+BATTERY_FAULTY = 10
+TERMINATED_BY_USER = 11</p>
+</dd>
+</dl>
+</div></blockquote>
 </dd></dl>
 
 </section>
 <section id="module-TimerThread">
 <span id="timerthread-py"></span><h2>TimerThread.py<a class="headerlink" href="#module-TimerThread" title="Permalink to this headline">¶</a></h2>
+<p>This file is responsible for maintaining the clock for the charger</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="TimerThread.Clock">
 <em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">TimerThread.</span></span><span class="sig-name descname"><span class="pre">Clock</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lcdObjs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TimerThread.Clock" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="py method">
+<dd><p>This is the class for the timer/clock</p>
+<dl class="py method">
 <dt class="sig sig-object py" id="TimerThread.Clock.__init__">
 <span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lcdObjs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#TimerThread.Clock.__init__" title="Permalink to this definition">¶</a></dt>
-<dd><p>lcdObj: array of lcd objects</p>
+<dd><p>This function initializes the clock</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>lcdObjs</strong> – array of lcd objects to update with the time format</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TimerThread.Clock.getTime">
+<span class="sig-name descname"><span class="pre">getTime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TimerThread.Clock.getTime" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function will return the current time</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="TimerThread.Clock.run">
 <span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TimerThread.Clock.run" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method representing the thread’s activity.</p>
-<p>You may override this method in a subclass. The standard run() method
-invokes the callable object passed to the object’s constructor as the
-target argument, if any, with sequential and keyword arguments taken
-from the args and kwargs arguments, respectively.</p>
+<dd><p>This function will run the clock thread</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="TimerThread.Clock.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#TimerThread.Clock.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function stops the clock thread</p>
 </dd></dl>
 
 </dd></dl>
