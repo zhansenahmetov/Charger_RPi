@@ -1,0 +1,4 @@
+bluedot==2.0.0
+pymongo==3.7.1
+PyQt5==5.15.4
+smbus==1.1.post2
