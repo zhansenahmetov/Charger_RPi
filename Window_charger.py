@@ -63,6 +63,8 @@ class Ui_MainWindow(object):
         """
         This function will set up the UI elements that will be present on this window
 
+        The code was generated using GUI tool named QT Designer
+
         :param MainWindow: the window on which to build the elements
         """
         MainWindow.setObjectName("MainWindow")
@@ -139,7 +141,7 @@ class Ui_MainWindow(object):
         
     def killTimeout(self):
         """
-        This function kills the timeout delay thread
+        This function kills the timeout delay thread using qt_helper
         """
         try:
             print(qt_helper.timeoutGlobal)
@@ -151,12 +153,16 @@ class Ui_MainWindow(object):
     def stateUpdate(self):
         """
         This function is the 'brains' of the state machine on the Charger side.  Each time it is called it updates the
-        relevent components corresponding to the active state as defined by :obj:`StateClass.State`
+        relevant components corresponding to the active state as defined by :obj:`StateClass.State`
+        The components updated are self.label and self.label_3 that shows the status of the Charger on the screen.
+
+        Also when the state is updated, the :obj:`self.stateUpdateMongo()` function updates the state in MongoDB Database
+        or it calls itself after 15 minutes
         """
         global clientStatus, serverList, updateTime
         
         # terminate timeout on state change
-        print('kill thread')
+        #print('kill thread')
         self.killTimeout()
         
         self.label_3.setText("")
@@ -212,6 +218,8 @@ class Ui_MainWindow(object):
     def stateUpdateMongo(self):
         """
         This function updates the state in the Mongo Database
+        `pymongo.MongoClient` has an input of database server with its mail and password
+        :param newState: is Json file with name, state and last_update parameters
         """
         try:
             client = pymongo.MongoClient("mongodb+srv://wheelchair:wheelchair@cluster0.pywpd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
@@ -235,14 +243,51 @@ class Ui_MainWindow(object):
     def _bluetoothRun(self):
         """
         This is a container for all bluetooth functions
+        It is called as a separate thread that will run from the beginning of the app to track bluetooth communication
+
+        `data_received(args):`
+        This function reacts to data received over bluetooth
+        :param data: data received over bluetooth
+        Further the received data will be send to the TI Microcontroller using I2C connection
+
+        The first element of data array is msgPic[0]
+
+        `if msgPic[0]==3:` then charging is requested from TI MCU
+
+        `if msgPic[0]==7:` then start requested from TI MCU
+
+        `if msgPic[0]==11:` then stopping requested from TI MCU
+
+        :param MSG: is received from TI MCU after processing the request
+
+        For each MSG  received there is an if statement that will change the state of the Charger
+
+        if MSG==6: READY_TO_CHARGE
+
+        if MSG==7: CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds
+
+        if MSG==8:CHARGER_FAULTY_PLUGGED
+
+        if MSG==10:BATTERY_FAULTY
+
+        if MSG==11:TERMINATED_BY_USER
+
+        `client_connected(args):`
+        This function sends the confirmation to the wheelchair that the connection was successful
+
+        `client_disconnected(args):`
+        This function is called when client disconnected from Charger
+        updates state into CHARGER_AVAILABLE and kills all the threads if wheelchair is unplugged
+
+        If wheelchair is plugged, then it will remain in READY_TO_CHARGE state
+
+
+
         """
         global listT, limit_IV, delayList, delayTime
         
         def data_received(data):
-            """
-            This function reacts to data received over bluetooth
-            :param data: data received over bluetooth
-            """
+
             global stop_thread, count_start, count_stop
             try:
                 if listT[0].is_alive()==False:
@@ -384,9 +429,7 @@ class Ui_MainWindow(object):
                 
 
         def client_connected():
-            """
-            This function sends the confirmation to the wheelchair that the connection was successful
-            """
+
             global clientStatus
             server.send("1")
             print('client status is',clientStatus)
@@ -402,9 +445,7 @@ class Ui_MainWindow(object):
             
 
         def client_disconnected():
-            """
-            This function disconnects the client from the Charger
-            """
+
             global clientStatus, stop_thread 
             print("client disconnected")
             clientStatus=0
@@ -461,7 +502,20 @@ class Ui_MainWindow(object):
     
     def _readI2C(self):
         """
-        This function reads and reacts to the I2C communication from the TI Piccolo
+        This function reads and reacts to the I2C communication from the TI Piccolo.
+
+        It is also called as a separate thread to read from TI MCU.
+        :param MSG1: is received STATE of TI MCU, it is reply to message `21` requesting for the state of TI MCU
+        every 2 seconds the state of TI MCU is refreshed to keep tracking it.
+
+        For each message there is an if statement that updates the STATE of the Charger, and it is understandable
+        without commenting here.
+
+        Now both `_readI2C` and `_bluetoothRun` threads can use I2C communication at the same time, so it can cause some
+        problems, that were solved by using `thread.join` and `time.sleep`, however in the future it is better to have
+        two different threads for `Bluetooth` and `I2C` communication running in parallel in order to get rid of
+        disturbances.
+
         """
         #print('read2c')
         global stop_thread, serverList, listT, count_start, count_stop

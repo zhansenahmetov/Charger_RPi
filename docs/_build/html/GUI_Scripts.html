@@ -52,19 +52,54 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow._bluetoothRun">
 <span class="sig-name descname"><span class="pre">_bluetoothRun</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow._bluetoothRun" title="Permalink to this definition">¶</a></dt>
-<dd><p>This is a container for all bluetooth functions</p>
+<dd><p>This is a container for all bluetooth functions
+It is called as a separate thread that will run from the beginning of the app to track bluetooth communication</p>
+<p><cite>data_received(args):</cite>
+This function reacts to data received over bluetooth
+:param data: data received over bluetooth
+Further the received data will be send to the TI Microcontroller using I2C connection</p>
+<p>The first element of data array is msgPic[0]</p>
+<p><cite>if msgPic[0]==3:</cite> then charging is requested from TI MCU</p>
+<p><cite>if msgPic[0]==7:</cite> then start requested from TI MCU</p>
+<p><cite>if msgPic[0]==11:</cite> then stopping requested from TI MCU</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>MSG</strong> – is received from TI MCU after processing the request</p>
+</dd>
+</dl>
+<p>For each MSG  received there is an if statement that will change the state of the Charger</p>
+<p>if MSG==6: READY_TO_CHARGE</p>
+<p>if MSG==7: CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds</p>
+<p>if MSG==8:CHARGER_FAULTY_PLUGGED</p>
+<p>if MSG==10:BATTERY_FAULTY</p>
+<p>if MSG==11:TERMINATED_BY_USER</p>
+<p><cite>client_connected(args):</cite>
+This function sends the confirmation to the wheelchair that the connection was successful</p>
+<p><cite>client_disconnected(args):</cite>
+This function is called when client disconnected from Charger
+updates state into CHARGER_AVAILABLE and kills all the threads if wheelchair is unplugged</p>
+<p>If wheelchair is plugged, then it will remain in READY_TO_CHARGE state</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow._readI2C">
 <span class="sig-name descname"><span class="pre">_readI2C</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow._readI2C" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function reads and reacts to the I2C communication from the TI Piccolo</p>
+<dd><p>This function reads and reacts to the I2C communication from the TI Piccolo.</p>
+<p>It is also called as a separate thread to read from TI MCU.
+:param MSG1: is received STATE of TI MCU, it is reply to message <cite>21</cite> requesting for the state of TI MCU
+every 2 seconds the state of TI MCU is refreshed to keep tracking it.</p>
+<p>For each message there is an if statement that updates the STATE of the Charger, and it is understandable
+without commenting here.</p>
+<p>Now both <cite>_readI2C</cite> and <cite>_bluetoothRun</cite> threads can use I2C communication at the same time, so it can cause some
+problems, that were solved by using <cite>thread.join</cite> and <cite>time.sleep</cite>, however in the future it is better to have
+two different threads for <cite>Bluetooth</cite> and <cite>I2C</cite> communication running in parallel in order to get rid of
+disturbances.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.killTimeout">
 <span class="sig-name descname"><span class="pre">killTimeout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.killTimeout" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function kills the timeout delay thread</p>
+<dd><p>This function kills the timeout delay thread using qt_helper</p>
 </dd></dl>
 
 <dl class="py method">
@@ -82,6 +117,7 @@
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.setupUi">
 <span class="sig-name descname"><span class="pre">setupUi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">MainWindow</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.setupUi" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function will set up the UI elements that will be present on this window</p>
+<p>The code was generated using GUI tool named QT Designer</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>MainWindow</strong> – the window on which to build the elements</p>
@@ -93,13 +129,18 @@
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.stateUpdate">
 <span class="sig-name descname"><span class="pre">stateUpdate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.stateUpdate" title="Permalink to this definition">¶</a></dt>
 <dd><p>This function is the ‘brains’ of the state machine on the Charger side.  Each time it is called it updates the
-relevent components corresponding to the active state as defined by <a class="reference internal" href="Helper_funcs.html#StateClass.State" title="StateClass.State"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StateClass.State</span></code></a></p>
+relevant components corresponding to the active state as defined by <a class="reference internal" href="Helper_funcs.html#StateClass.State" title="StateClass.State"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StateClass.State</span></code></a>
+The components updated are self.label and self.label_3 that shows the status of the Charger on the screen.</p>
+<p>Also when the state is updated, the <code class="xref py py-obj docutils literal notranslate"><span class="pre">self.stateUpdateMongo()</span></code> function updates the state in MongoDB Database
+or it calls itself after 15 minutes</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="Window_charger.Ui_MainWindow.stateUpdateMongo">
 <span class="sig-name descname"><span class="pre">stateUpdateMongo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Window_charger.Ui_MainWindow.stateUpdateMongo" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function updates the state in the Mongo Database</p>
+<dd><p>This function updates the state in the Mongo Database
+<cite>pymongo.MongoClient</cite> has an input of database server with its mail and password
+:param newState: is Json file with name, state and last_update parameters</p>
 </dd></dl>
 
 </dd></dl>

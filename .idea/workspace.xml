@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="959accdc-50c2-4db0-80cd-0aa40d85dab7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QT_Helpers.py" beforeDir="false" afterPath="$PROJECT_DIR$/QT_Helpers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/StateClass.py" beforeDir="false" afterPath="$PROJECT_DIR$/StateClass.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TimerThread.py" beforeDir="false" afterPath="$PROJECT_DIR$/TimerThread.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Window_charger.py" beforeDir="false" afterPath="$PROJECT_DIR$/Window_charger.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/GUI_Scripts.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/GUI_Scripts.doctree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/Helper_funcs.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/Helper_funcs.doctree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/.buildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/.buildinfo" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/_build/html/GUI_Scripts.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/GUI_Scripts.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/Helper_funcs.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/Helper_funcs.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/genindex.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/genindex.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/custom.css" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/custom.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/doctools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery-3.5.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/jquery-3.5.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/jquery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/searchtools.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore-1.13.1.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/underscore-1.13.1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_build/html/_static/underscore.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/_static/underscore.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/_build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/searchindex.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
