@@ -68,11 +68,11 @@ Further the received data will be send to the TI Microcontroller using I2C conne
 </dd>
 </dl>
 <p>For each MSG  received there is an if statement that will change the state of the Charger</p>
-<p>if MSG==6: READY_TO_CHARGE</p>
-<p>if MSG==7: CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds</p>
-<p>if MSG==8:CHARGER_FAULTY_PLUGGED</p>
-<p>if MSG==10:BATTERY_FAULTY</p>
-<p>if MSG==11:TERMINATED_BY_USER</p>
+<p><cite>if MSG==6:</cite> READY_TO_CHARGE</p>
+<p><cite>if MSG==7:</cite> CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds</p>
+<p><cite>if MSG==8:</cite> CHARGER_FAULTY_PLUGGED</p>
+<p><cite>if MSG==10:</cite> BATTERY_FAULTY</p>
+<p><cite>if MSG==11:</cite> TERMINATED_BY_USER</p>
 <p><cite>client_connected(args):</cite>
 This function sends the confirmation to the wheelchair that the connection was successful</p>
 <p><cite>client_disconnected(args):</cite>

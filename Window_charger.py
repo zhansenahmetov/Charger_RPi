@@ -220,7 +220,7 @@ class Ui_MainWindow(object):
         This function updates the state in the Mongo Database.
 
         `pymongo.MongoClient` has an input of database server with its mail and password
-        
+
         `newState`: is Json file with name, state and last_update parameters
         """
         try:
@@ -264,15 +264,15 @@ class Ui_MainWindow(object):
 
         For each MSG  received there is an if statement that will change the state of the Charger
 
-        if MSG==6: READY_TO_CHARGE
+        `if MSG==6:` READY_TO_CHARGE
 
-        if MSG==7: CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds
+        `if MSG==7:` CHARGING_IN_PROGRESS, then readI2C thread is started to receive update from TI MCU each 2 seconds
 
-        if MSG==8:CHARGER_FAULTY_PLUGGED
+        `if MSG==8:` CHARGER_FAULTY_PLUGGED
 
-        if MSG==10:BATTERY_FAULTY
+        `if MSG==10:` BATTERY_FAULTY
 
-        if MSG==11:TERMINATED_BY_USER
+        `if MSG==11:` TERMINATED_BY_USER
 
         `client_connected(args):`
         This function sends the confirmation to the wheelchair that the connection was successful

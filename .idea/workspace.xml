@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="959accdc-50c2-4db0-80cd-0aa40d85dab7" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Window_charger.py" beforeDir="false" afterPath="$PROJECT_DIR$/Window_charger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/GUI_Scripts.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/GUI_Scripts.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/doctrees/environment.pickle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_build/html/GUI_Scripts.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_build/html/GUI_Scripts.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
