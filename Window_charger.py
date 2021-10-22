@@ -217,9 +217,11 @@ class Ui_MainWindow(object):
 
     def stateUpdateMongo(self):
         """
-        This function updates the state in the Mongo Database
+        This function updates the state in the Mongo Database.
+
         `pymongo.MongoClient` has an input of database server with its mail and password
-        :param newState: is Json file with name, state and last_update parameters
+        
+        `newState`: is Json file with name, state and last_update parameters
         """
         try:
             client = pymongo.MongoClient("mongodb+srv://wheelchair:wheelchair@cluster0.pywpd.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
